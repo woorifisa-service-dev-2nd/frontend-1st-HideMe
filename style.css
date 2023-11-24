@@ -1,0 +1,17 @@
+#image {
+
+    width: 500px;
+    height: 500px;
+
+}
+
+#canvas {
+    border: black;
+    position: absolute;
+
+}
+
+div {
+    display: flex;
+    justify-content: center;
+}

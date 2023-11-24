@@ -67,30 +67,6 @@ const imageSizeForResizing = (imageWidth, imageHeight) => {
 
 
 /**
- * 현재 마우스 좌표에 해당하는 영역을 판별한 후 모자이크 적용
- * 
- * @param {이벤트 객체} e 
-*/
-const getCurrentMosaicArea = (e) => {
-    const curX = e.clientX - canvas.getBoundingClientRect().x;
-    const curY = e.clientY - canvas.getBoundingClientRect().y;
-
-    for (const area of mosaicArea) {
-        const unit = area.unit;
-        const areaStartX = area.x;
-        const areaEndX = area.x + unit.height;
-        const areaStartY = area.y;
-        const areaEndY = area.y + unit.width;
-
-        if (areaStartX <= curX && curX < areaEndX && areaStartY <= curY && curY < areaEndY) {
-            context.fillStyle = getMosaicColorFromImage(areaStartX, areaStartY, unit.width, unit.height);
-            context.fillRect(areaStartX, areaStartY, unit.width, unit.height);
-        }
-    }
-}
-
-
-/**
  * 선택된 임의의 좌표값에 해당하는 RGB 정보를 이미지에서 추출해 CSS 적용 가능한 문자열로 반환
  *  
  * @param {영역 시작 X 좌표} startX 
@@ -135,6 +111,34 @@ const extractRGBFromImage = (x, y) => {
     const green = imageData.data[1];
     const blue = imageData.data[2];
     return { red, green, blue };
+}
+
+
+/**
+ * 현재 마우스 좌표에 해당하는 영역을 판별한 후 모자이크 적용
+ * 
+ * @param {이벤트 객체} e 
+*/
+const getCurrentMosaicArea = (e) => {
+    const curX = e.clientX - canvas.getBoundingClientRect().x;
+    const curY = e.clientY - canvas.getBoundingClientRect().y;
+
+    for (const area of mosaicArea) {
+        const unit = area.unit;
+        const areaStartX = area.x;
+        const areaEndX = area.x + unit.height;
+        const areaStartY = area.y;
+        const areaEndY = area.y + unit.width;
+
+        if (areaStartX <= curX && curX < areaEndX && areaStartY <= curY && curY < areaEndY) {
+            if (area.isMosaiced) {
+                continue;
+            }
+            context.fillStyle = getMosaicColorFromImage(areaStartX, areaStartY, unit.width, unit.height);
+            context.fillRect(areaStartX, areaStartY, unit.width, unit.height);
+            area.isMosaiced = true;
+        }
+    }
 }
 
 canvas.addEventListener('mousemove', getCurrentMosaicArea)

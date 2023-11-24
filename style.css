@@ -16,9 +16,3 @@ h1 {
     z-index: 1;
 }
 
-.mosaic-box {
-    /* background-color: black; */
-    display: flex;
-    position: fixed;
-    z-index: 2;
-}

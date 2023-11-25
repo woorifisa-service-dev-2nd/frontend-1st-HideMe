@@ -1,17 +1,40 @@
 #image {
-
     width: 500px;
     height: 500px;
+}
 
+#title {
+    text-align: center;
+    margin: 10px;
+}
+
+
+div {
+    position: fixed;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+
+#canvas-div {
+    z-index: 1;
+}
+
+#image-div {
+    z-index: -1;
 }
 
 #canvas {
-    border: black;
-    position: absolute;
+    position: fixed;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
 
 }
 
-div {
-    display: flex;
-    justify-content: center;
+#image {
+    position: fixed;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
 }

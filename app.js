@@ -2,17 +2,19 @@ const image = document.getElementById('image');
 const canvas = document.getElementById('canvas'); //캔버스 생성
 const ctx = canvas.getContext('2d');
 
+const park = new Image();
+park.src = 'images/박진영.jpeg';
+
+
 //이미지 위치 구하기
 const imageTop = image.getBoundingClientRect().top;
 const imageBottom = image.getBoundingClientRect().bottom;
 const imageLeft = image.getBoundingClientRect().left;
 const imageRight = image.getBoundingClientRect().right;
 //console.log(`${imageTop}  ${imageBottom} ${imageLeft} ${imageRight}`);
-const image2 = new Image();
-image2.src = 'images/박진영.jpeg';
 
 
-const drawImage = canvas.onload = (xPos, yPos, mosaic) => {
+const drawImage = image.onload = (xPos, yPos) => {
     // 이미지 그리기
 
     let dx = 50 * xPos;
@@ -24,7 +26,7 @@ const drawImage = canvas.onload = (xPos, yPos, mosaic) => {
 
     console.log(`dx:${dx} dy:${dy}`);
 
-    ctx.drawImage(image, dx, dy, 50, 50, dx, dy, 50, 50);
+    ctx.drawImage(park, dx, dy, 50, 50, dx, dy, 50, 50);
     //모자이크 하기
 
     document.body.appendChild(ctx.canvas);
@@ -32,15 +34,14 @@ const drawImage = canvas.onload = (xPos, yPos, mosaic) => {
 }
 
 
-image.addEventListener('mousemove', (event) => {
+canvas.addEventListener('mousemove', (event) => {
     const x = event.clientX;
     const y = event.clientY;
-    //console.log(`x:${x} y: ${y}`);
+    console.log(`x:${x} y: ${y}`);
 
     const xPos = parseInt((x - imageLeft) / 50); //왼쪽에서 몇번째 격자인지
     const yPos = parseInt((y - imageTop) / 50); //위에서 몇번째 격자인지
     //console.log(`${xPos} ${yPos}`);
-
     drawImage(xPos, yPos);
 });
 
